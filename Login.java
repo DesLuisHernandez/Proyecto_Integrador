@@ -78,10 +78,10 @@ public class Login extends javax.swing.JFrame {
         lUser = new javax.swing.JLabel();
         lpassword = new javax.swing.JLabel();
         tUser = new javax.swing.JTextField();
-        tPassword = new javax.swing.JTextField();
         lLogin = new javax.swing.JLabel();
         bLogin = new javax.swing.JButton();
         lIcono = new javax.swing.JLabel();
+        tPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,8 +98,6 @@ public class Login extends javax.swing.JFrame {
         lpassword.setText("Contraseña");
 
         tUser.setForeground(new java.awt.Color(0, 0, 51));
-
-        tPassword.setForeground(new java.awt.Color(0, 0, 51));
 
         lLogin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lLogin.setText("Iniciar sesión");
@@ -127,11 +125,11 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(panelEncimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEncimaLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addGroup(panelEncimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelEncimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lUser, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tUser, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tUser, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                            .addComponent(tPassword)))
                     .addGroup(panelEncimaLayout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addComponent(bLogin))
@@ -153,15 +151,14 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(tUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lpassword)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(bLogin)
-                .addGap(30, 30, 30))
+                .addGap(40, 40, 40))
         );
 
         tUser.getAccessibleContext().setAccessibleName("Nombre usuario");
-        tPassword.getAccessibleContext().setAccessibleName("Contraseña");
 
         javax.swing.GroupLayout panelLoginLayout = new javax.swing.GroupLayout(panelLogin);
         panelLogin.setLayout(panelLoginLayout);
@@ -176,8 +173,8 @@ public class Login extends javax.swing.JFrame {
             panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLoginLayout.createSequentialGroup()
                 .addGap(63, 63, 63)
-                .addComponent(panelEncima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addComponent(panelEncima, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -207,7 +204,6 @@ public class Login extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "¡Éxito!");
                 Principal pr = new Principal();
                 pr.setVisible(true);
             } else {
@@ -263,7 +259,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lpassword;
     private javax.swing.JPanel panelEncima;
     private javax.swing.JPanel panelLogin;
-    private javax.swing.JTextField tPassword;
+    private javax.swing.JPasswordField tPassword;
     private javax.swing.JTextField tUser;
     // End of variables declaration//GEN-END:variables
 }

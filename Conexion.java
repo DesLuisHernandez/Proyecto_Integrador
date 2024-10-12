@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author genny
+ * @author Luis Hernández
  */
 public class Conexion { // Cambiar a "Conexion" y hacerlo "public"
     private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";

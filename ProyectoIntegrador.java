@@ -4,7 +4,7 @@
 
 /**
  *
- * @author genny
+ * @author Luis Hernández
  */
 import java.sql.Connection;
 import java.sql.SQLException;

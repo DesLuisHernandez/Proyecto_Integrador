@@ -1,3 +1,11 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+/**
+ *
+ * @author Luis Hernández
+ */
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;

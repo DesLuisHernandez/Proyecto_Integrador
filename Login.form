@@ -57,8 +57,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
-                  <Component id="panelEncima" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="81" max="32767" attributes="0"/>
+                  <Component id="panelEncima" min="-2" pref="291" max="-2" attributes="0"/>
+                  <EmptySpace pref="76" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -90,11 +90,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="lpassword" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
-                                  <Component id="tPassword" alignment="0" min="-2" pref="188" max="-2" attributes="0"/>
                                   <Component id="lUser" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
-                                  <Component id="tUser" alignment="0" min="-2" pref="188" max="-2" attributes="0"/>
+                                  <Component id="tUser" alignment="0" pref="188" max="32767" attributes="0"/>
+                                  <Component id="tPassword" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -123,11 +123,11 @@
                       <Component id="tUser" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lpassword" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="tPassword" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="bLogin" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -162,16 +162,6 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Nombre usuario"/>
               </AccessibilityProperties>
             </Component>
-            <Component class="javax.swing.JTextField" name="tPassword">
-              <Properties>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="33" green="0" red="0" type="rgb"/>
-                </Property>
-              </Properties>
-              <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Contrase&#xf1;a"/>
-              </AccessibilityProperties>
-            </Component>
             <Component class="javax.swing.JLabel" name="lLogin">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -200,6 +190,8 @@
                   <Image iconType="3" name="/images/file.jpg"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JPasswordField" name="tPassword">
             </Component>
           </SubComponents>
         </Container>
