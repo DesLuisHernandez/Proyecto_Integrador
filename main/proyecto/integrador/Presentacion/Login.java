@@ -1,13 +1,7 @@
-
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import java.sql.SQLException;
+package main.proyecto.integrador.Presentacion;
+import main.proyecto.integrador.Logica.UsuarioService;
+import javax.swing.*;
+import java.awt.*; // Aseg
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,15 +12,12 @@ import java.sql.SQLException;
  * @author genny
  */
 public class Login extends javax.swing.JFrame {
-
-    Connection con = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-
+    private UsuarioService usuarioService;
     /**
      * Creates new form Login
      */
     public Login() {
+        usuarioService = new UsuarioService(); // Inicializa UsuarioService
         initComponents();
 
         // Panel con degradado
@@ -49,6 +40,8 @@ public class Login extends javax.swing.JFrame {
         panelDegradado.setLayout(null); // Deshabilitar layout para control manual
         panelDegradado.add(panelCircular); // Añadir el nuevo panel
         panelCircular.setLayout(null); // Deshabilitar layout para control manual
+         
+        // Agregar componentes al panel circular
         panelCircular.add(lLogin);
         panelCircular.add(lIcono);
         panelCircular.add(lUser);
@@ -56,6 +49,7 @@ public class Login extends javax.swing.JFrame {
         panelCircular.add(lpassword);
         panelCircular.add(tPassword);
         panelCircular.add(bLogin);
+        
         // Centrar la ventana
         setLocationRelativeTo(null);
 
@@ -195,24 +189,17 @@ public class Login extends javax.swing.JFrame {
 
     private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
         // TODO add your handling code here:
-        try {
-            Connection con = Conexion.getConnection();
-            String sql = "SELECT * FROM USUARIO WHERE LOGIN=? AND CONTRASENA=?";
-            PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, tUser.getText());
-            pst.setString(2, tPassword.getText());
-            ResultSet rs = pst.executeQuery();
+        String username = tUser.getText().trim();
+        String password = new String(tPassword.getPassword()).trim();
 
-            if (rs.next()) {
-                Principal pr = new Principal();
-                pr.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario o contraseña inválidos");
-                tUser.setText("");
-                tPassword.setText("");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos: " + e.getMessage());
+        if (usuarioService.autenticarUsuario(username, password)) { // Usa el método validarUsuario
+            Principal pr = new Principal(); // Cambia a la ventana principal
+            pr.setVisible(true);
+            this.dispose(); // Cierra la ventana de login
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña inválidos");
+            tUser.setText("");
+            tPassword.setText("");
         }
     }//GEN-LAST:event_bLoginActionPerformed
 
@@ -244,10 +231,9 @@ public class Login extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
+        SwingUtilities.invokeLater(() -> {
+            Login login = new Login();
+            login.setVisible(true); // Muestra la ventana de login
         });
     }
 

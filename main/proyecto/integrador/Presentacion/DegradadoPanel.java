@@ -6,6 +6,7 @@
  *
  * @author Luis Hernández
  */
+package main.proyecto.integrador.Presentacion;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;

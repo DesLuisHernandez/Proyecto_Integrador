@@ -1,4 +1,4 @@
-
+package main.proyecto.integrador.Presentacion;
 import java.awt.CardLayout;
 
 /*
@@ -10,7 +10,19 @@ import java.awt.CardLayout;
  *
  * @author Luis Hernández
  */
+import javax.swing.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
+import main.proyecto.integrador.Datos.Usuarios;
+import main.proyecto.integrador.Datos.Conexion;
+import main.proyecto.integrador.Datos.UsuariosDAO;
+import main.proyecto.integrador.Logica.UsuarioService;
 
 public class Principal extends javax.swing.JFrame {
     /**
@@ -20,8 +32,42 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         
-        cardLayout =(CardLayout)(jPanelPrincipal.getLayout());
-             
+        cardLayout =(CardLayout)(jPanelPrincipal.getLayout()); 
+   
+    }
+    
+     public void listarTablaUsuarios() {
+        try {
+            // Inicializa el modelo de tabla
+            MiModeloTabla modelo = new MiModeloTabla(); // Usa el modelo personalizado
+            modelo.addColumn("Cédula");
+            modelo.addColumn("Nombre");
+            modelo.addColumn("Apellido");
+            modelo.addColumn("Email");
+            modelo.addColumn("Activo");
+
+            tableUsuarios.setModel(modelo);
+            
+            modelo.setRowCount(0); // Limpia la tabla antes de añadir nuevos datos
+
+            // Inicializa el servicio y obtiene la lista de usuarios
+            UsuarioService usuarioService = new UsuarioService();
+            List<Usuarios> usuarios = usuarioService.listarUsuarios();
+
+            // Llena la tabla con los datos de usuarios
+            for (Usuarios usuario : usuarios) {
+                Object[] fila = { usuario.getCedula(), usuario.getNombre(), 
+                                usuario.getApellido(), usuario.getEmail(), String.valueOf(usuario.getActivo())};
+                modelo.addRow(fila);
+            }
+           
+            // Configura el ComboBox para el campo Activo
+            JComboBox<String> comboBoxActivo = new JComboBox<>(new String[]{"S", "N"});
+            tableUsuarios.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboBoxActivo));
+
+        } catch (Exception ex) { // Manejo de excepciones generales
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, "Error al actualizar tabla de usuarios", ex);
+        }
     }
 
     /**
@@ -54,6 +100,12 @@ public class Principal extends javax.swing.JFrame {
         pclInicio = new javax.swing.JPanel();
         pclProyectos = new javax.swing.JPanel();
         pclUsuarios = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        bGuardar = new javax.swing.JButton();
+        bEditar = new javax.swing.JButton();
+        bEliminar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableUsuarios = new javax.swing.JTable();
         pclTyA = new javax.swing.JPanel();
         pclVentas = new javax.swing.JPanel();
         pclPagos = new javax.swing.JPanel();
@@ -75,14 +127,14 @@ public class Principal extends javax.swing.JFrame {
         jLNombreUsuario.setText("ADMINISTRADOR");
         jPanelMenu.add(jLNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 112, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/file.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/file.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
         jPanelMenu.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 79, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/avatar.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/avatar.png"))); // NOI18N
         jPanelMenu.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 130, 80, 75));
 
-        jbSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cerrar-sesion.png"))); // NOI18N
+        jbSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/cerrar-sesion.png"))); // NOI18N
         jbSalir.setText("Salir");
         jbSalir.setContentAreaFilled(false);
         jbSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +144,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanelMenu.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 90, -1));
 
-        jbReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/analitica.png"))); // NOI18N
+        jbReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/analitica.png"))); // NOI18N
         jbReportes.setText("Reportes");
         jbReportes.setContentAreaFilled(false);
         jbReportes.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +154,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanelMenu.add(jbReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 110, -1));
 
-        jbPagos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/dinero.png"))); // NOI18N
+        jbPagos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/dinero.png"))); // NOI18N
         jbPagos.setText("Pagos");
         jbPagos.setContentAreaFilled(false);
         jbPagos.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +164,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanelMenu.add(jbPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 90, -1));
 
-        jbVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/contrato.png"))); // NOI18N
+        jbVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/contrato.png"))); // NOI18N
         jbVentas.setText("Ventas");
         jbVentas.setContentAreaFilled(false);
         jbVentas.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +174,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanelMenu.add(jbVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 90, -1));
 
-        jbTyA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edificio.png"))); // NOI18N
+        jbTyA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/edificio.png"))); // NOI18N
         jbTyA.setText("Torres y Aptos");
         jbTyA.setContentAreaFilled(false);
         jbTyA.addActionListener(new java.awt.event.ActionListener() {
@@ -132,7 +184,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanelMenu.add(jbTyA, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 130, -1));
 
-        jbUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/usuario.png"))); // NOI18N
+        jbUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/usuario.png"))); // NOI18N
         jbUsuarios.setText("Usuarios");
         jbUsuarios.setContentAreaFilled(false);
         jbUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -142,7 +194,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanelMenu.add(jbUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 100, -1));
 
-        jbProyectos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/proyecto.png"))); // NOI18N
+        jbProyectos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/proyecto.png"))); // NOI18N
         jbProyectos.setText("Proyectos");
         jbProyectos.setContentAreaFilled(false);
         jbProyectos.addActionListener(new java.awt.event.ActionListener() {
@@ -152,7 +204,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanelMenu.add(jbProyectos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 110, -1));
 
-        jbInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/casa.png"))); // NOI18N
+        jbInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/casa.png"))); // NOI18N
         jbInicio.setText("Dashboard");
         jbInicio.setContentAreaFilled(false);
         jbInicio.setPreferredSize(new java.awt.Dimension(107, 24));
@@ -174,7 +226,7 @@ public class Principal extends javax.swing.JFrame {
         pclInicio.setLayout(pclInicioLayout);
         pclInicioLayout.setHorizontalGroup(
             pclInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 555, Short.MAX_VALUE)
         );
         pclInicioLayout.setVerticalGroup(
             pclInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +241,7 @@ public class Principal extends javax.swing.JFrame {
         pclProyectos.setLayout(pclProyectosLayout);
         pclProyectosLayout.setHorizontalGroup(
             pclProyectosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 555, Short.MAX_VALUE)
         );
         pclProyectosLayout.setVerticalGroup(
             pclProyectosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,17 +250,87 @@ public class Principal extends javax.swing.JFrame {
 
         jPanelPrincipal.add(pclProyectos, "pclProyectos");
 
-        pclUsuarios.setBackground(new java.awt.Color(153, 153, 255));
+        pclUsuarios.setBackground(new java.awt.Color(255, 255, 255));
+
+        bGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/agregar-usuario.png"))); // NOI18N
+        bGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bGuardarActionPerformed(evt);
+            }
+        });
+
+        bEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/editar.png"))); // NOI18N
+        bEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEditarActionPerformed(evt);
+            }
+        });
+
+        bEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/quitar-usuario.png"))); // NOI18N
+        bEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEliminarActionPerformed(evt);
+            }
+        });
+
+        tableUsuarios.setBackground(new java.awt.Color(204, 255, 204));
+        tableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tableUsuarios.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tableUsuariosAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(tableUsuarios);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(bGuardar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bEditar)
+                .addGap(1, 1, 1)
+                .addComponent(bEliminar)
+                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bGuardar)
+                    .addComponent(bEditar)
+                    .addComponent(bEliminar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout pclUsuariosLayout = new javax.swing.GroupLayout(pclUsuarios);
         pclUsuarios.setLayout(pclUsuariosLayout);
         pclUsuariosLayout.setHorizontalGroup(
             pclUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pclUsuariosLayout.setVerticalGroup(
             pclUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanelPrincipal.add(pclUsuarios, "pclUsuarios");
@@ -219,7 +341,7 @@ public class Principal extends javax.swing.JFrame {
         pclTyA.setLayout(pclTyALayout);
         pclTyALayout.setHorizontalGroup(
             pclTyALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 555, Short.MAX_VALUE)
         );
         pclTyALayout.setVerticalGroup(
             pclTyALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,7 +356,7 @@ public class Principal extends javax.swing.JFrame {
         pclVentas.setLayout(pclVentasLayout);
         pclVentasLayout.setHorizontalGroup(
             pclVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 555, Short.MAX_VALUE)
         );
         pclVentasLayout.setVerticalGroup(
             pclVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,7 +371,7 @@ public class Principal extends javax.swing.JFrame {
         pclPagos.setLayout(pclPagosLayout);
         pclPagosLayout.setHorizontalGroup(
             pclPagosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 555, Short.MAX_VALUE)
         );
         pclPagosLayout.setVerticalGroup(
             pclPagosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,7 +386,7 @@ public class Principal extends javax.swing.JFrame {
         pclReportes.setLayout(pclReportesLayout);
         pclReportesLayout.setHorizontalGroup(
             pclReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 555, Short.MAX_VALUE)
         );
         pclReportesLayout.setVerticalGroup(
             pclReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,10 +429,14 @@ public class Principal extends javax.swing.JFrame {
         cardLayout.show(jPanelPrincipal, "pclInicio");
         
     }//GEN-LAST:event_jbInicioActionPerformed
-
+    
     private void jbUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUsuariosActionPerformed
-        // TODO add your handling code here:
+
+        //Cambia la vista a pclUsuarios
         cardLayout.show(jPanelPrincipal, "pclUsuarios");
+        
+        // Llama al método para actualizar la tabla de usuarios
+        listarTablaUsuarios();         
     }//GEN-LAST:event_jbUsuariosActionPerformed
 
     private void jbTyAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbTyAActionPerformed
@@ -332,6 +458,76 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         cardLayout.show(jPanelPrincipal, "pclReportes");
     }//GEN-LAST:event_jbReportesActionPerformed
+
+    private void bEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarActionPerformed
+        try {
+             int selectedRow = tableUsuarios.getSelectedRow();
+             // Validar que se haya seleccionado una fila
+            if (selectedRow != -1) {
+                
+                // Asegurarse de que los cambios se reflejan en el modelo
+                if (tableUsuarios.isEditing()) {
+                    tableUsuarios.getCellEditor().stopCellEditing();
+                }
+                // Obtener los valores de la fila seleccionada
+                String cedula = tableUsuarios.getValueAt(selectedRow, 0).toString();
+                String nombre = tableUsuarios.getValueAt(selectedRow, 1).toString();
+                String apellido = tableUsuarios.getValueAt(selectedRow, 2).toString();
+                String email = tableUsuarios.getValueAt(selectedRow, 3).toString();
+                String activo = tableUsuarios.getValueAt(selectedRow, 4).toString(); // 'S' o 'N'
+
+                // Llamar al método de la capa lógica para actualizar el usuario
+                UsuarioService usuarioService = new UsuarioService();
+                boolean actualizado = usuarioService.editarUsuario(cedula, nombre, apellido, email, activo);
+
+                if (actualizado) {
+                    System.out.println("Usuario actualizado correctamente.");
+                    // Refrescar la tabla para mostrar los datos actualizados
+                    usuarioService.listarUsuarios();  // Método que vuelve a listar los usuarios
+                } else {
+                    System.out.println("No se pudo actualizar el usuario.");
+                }
+            } else {
+                System.out.println("Por favor seleccione una fila.");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, "Error al editar usuario", ex);
+        }    
+    }//GEN-LAST:event_bEditarActionPerformed
+
+    private void tableUsuariosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tableUsuariosAncestorAdded
+       
+    }//GEN-LAST:event_tableUsuariosAncestorAdded
+
+    private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
+        // Crear y mostrar el formulario para agregar usuario
+        AgregarUsuarioForm agregarUsuarioForm = new AgregarUsuarioForm(this);
+        agregarUsuarioForm.setVisible(true);
+    }//GEN-LAST:event_bGuardarActionPerformed
+
+    private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = tableUsuarios.getSelectedRow(); // Obtiene la fila seleccionada
+
+        if (filaSeleccionada >= 0) {
+            String cedula = tableUsuarios.getValueAt(filaSeleccionada, 0).toString();
+            int confirm = JOptionPane.showConfirmDialog(this, 
+                "¿Está seguro de que desea eliminar al usuario con cédula " + cedula + "?",
+                "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                UsuarioService usuarioService = new UsuarioService();
+                if (usuarioService.eliminarUsuario(cedula)) {
+                    JOptionPane.showMessageDialog(this, "Usuario eliminado exitosamente");
+                    listarTablaUsuarios(); // Actualiza la tabla
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al eliminar el usuario");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un usuario para eliminar.");
+        }
+    }//GEN-LAST:event_bEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -369,13 +565,18 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bEditar;
+    private javax.swing.JButton bEliminar;
+    private javax.swing.JButton bGuardar;
     private javax.swing.JLabel jLNombreUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelMenu;
     private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSplitPane jSplitPane2;
@@ -394,5 +595,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel pclTyA;
     private javax.swing.JPanel pclUsuarios;
     private javax.swing.JPanel pclVentas;
+    private javax.swing.JTable tableUsuarios;
     // End of variables declaration//GEN-END:variables
 }
