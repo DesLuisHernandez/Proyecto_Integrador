@@ -1,7 +1,7 @@
 package main.proyecto.integrador.Presentacion;
-import main.proyecto.integrador.Logica.UsuarioService;
 import javax.swing.*;
 import java.awt.*; // Aseg
+import main.proyecto.integrador.Logica.validarDatos;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -12,12 +12,14 @@ import java.awt.*; // Aseg
  * @author genny
  */
 public class Login extends javax.swing.JFrame {
-    private UsuarioService usuarioService;
+    // Instanciar la clase ValidarDatos (fuera del método del botón, como un atributo de la clase de tu formulario)
+     private validarDatos validador = new validarDatos();
     /**
      * Creates new form Login
      */
     public Login() {
-        usuarioService = new UsuarioService(); // Inicializa UsuarioService
+ 
+        
         initComponents();
 
         // Panel con degradado
@@ -105,7 +107,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        lIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/file.jpg"))); // NOI18N
+        lIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/proyecto/integrador/images/file.jpg"))); // NOI18N
 
         javax.swing.GroupLayout panelEncimaLayout = new javax.swing.GroupLayout(panelEncima);
         panelEncima.setLayout(panelEncimaLayout);
@@ -191,15 +193,22 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = tUser.getText().trim();
         String password = new String(tPassword.getPassword()).trim();
+        
 
-        if (usuarioService.autenticarUsuario(username, password)) { // Usa el método validarUsuario
-            Principal pr = new Principal(); // Cambia a la ventana principal
+        if (validador.validarUsuario(username, password)) { // Usa el método validarUsuario
+            String rol = validador.validarRol(username);
+            Principal pr = new Principal(rol); // Cambia a la ventana principal
             pr.setVisible(true);
             this.dispose(); // Cierra la ventana de login
         } else {
-            JOptionPane.showMessageDialog(this, "Usuario o contraseña inválidos");
+            if (validador.intentos ==5){
+                bLogin.setEnabled(false); // Deshabilitar el botón de login
+                JOptionPane.showMessageDialog(this, "Ha alcanzado el máximo número de intentos permitidos. Intente más tarde.");
+                System.exit(0);
+            }
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña inválidos.");
             tUser.setText("");
-            tPassword.setText("");
+            tPassword.setText("");     
         }
     }//GEN-LAST:event_bLoginActionPerformed
 

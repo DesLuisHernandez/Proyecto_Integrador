@@ -17,33 +17,33 @@ public class Usuarios {
     private String email;
     private String login;
     private String contrasena;
-    private char activo;
+    private String direccion;
 
-    public Usuarios(String cedula, String nombre, String apellido, String email, String login, String contrasena, char activo) {
+    public Usuarios(String cedula, String nombre, String apellido, String email, String login, String contrasena, String direccion) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.login = login;
         this.contrasena = contrasena;
-        this.activo = activo;
+        this.direccion = direccion;
     }
 
-    public Usuarios(String cedula, String nombre, String apellido, String email, char activo) {
+    public Usuarios(String cedula, String nombre, String apellido, String email, String direccion) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
-        this.activo = activo;
+        this.direccion = direccion;
     }
 
-    public Usuarios(int id, String cedula, String nombre, String apellido, String email, char activo) {
+    public Usuarios(int id, String cedula, String nombre, String apellido, String email, String direccion) {
         this.id = id;
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
-        this.activo = activo;
+        this.direccion = direccion;
     }
 
     public Usuarios() {
@@ -105,17 +105,17 @@ public class Usuarios {
         this.contrasena = contrasena;
     }
 
-    public char getActivo() {
-        return activo;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setActivo(char activo) {
-        this.activo = activo;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     @Override
     public String toString() {
-        return "Usuarios{" + "id=" + id + ", cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido +  ", email=" + email + ", activo=" + activo + '}';
+        return "Usuarios{" + "id=" + id + ", cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido +  ", email=" + email + ", direccion=" + direccion + '}';
     }
     
 }
