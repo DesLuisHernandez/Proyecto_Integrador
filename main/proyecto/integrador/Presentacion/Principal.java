@@ -20,13 +20,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import main.proyecto.integrador.Datos.Apartamentos;
 import main.proyecto.integrador.Datos.Cliente;
 
 import main.proyecto.integrador.Datos.Usuarios;
 import main.proyecto.integrador.Datos.Conexion;
+import main.proyecto.integrador.Datos.Pago;
+import main.proyecto.integrador.Datos.Proyectos;
+import main.proyecto.integrador.Datos.Torres;
 import main.proyecto.integrador.Datos.UsuariosDAO;
 import main.proyecto.integrador.Datos.Venta;
+import main.proyecto.integrador.Logica.GestionTorres;
+import main.proyecto.integrador.Logica.gestionApartamentos;
+import main.proyecto.integrador.Logica.gestionProyectos;
 import main.proyecto.integrador.Logica.gestionarClientes;
+import main.proyecto.integrador.Logica.gestionarPagos;
 import main.proyecto.integrador.Logica.gestionarUsuario;
 import main.proyecto.integrador.Logica.gestionarVenta;
 
@@ -50,7 +58,7 @@ public class Principal extends javax.swing.JFrame {
         //cardLayout =(CardLayout)(jPanelPrincipal.getLayout());    
     }
     
-     public void listarTablaUsuarios() {
+    public void listarTablaUsuarios() {
         try {
             // Inicializa el modelo de tabla
             MiModeloTabla modelo = new MiModeloTabla(); // Usa el modelo personalizado
@@ -79,7 +87,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }
      
-     public void listarTablaVentas() {
+    public void listarTablaVentas() {
         DefaultTableModel modelo = (DefaultTableModel) tVentas.getModel();
         modelo.setRowCount(0);
         try {
@@ -101,7 +109,7 @@ public class Principal extends javax.swing.JFrame {
                 modelo.addRow(fila);
             }
         } catch (Exception ex) { // Manejo de excepciones generales
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, "Error al actualizar tabla de usuarios", ex);
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, "Error al actualizar tabla de ventas", ex);
         }
     }
      
@@ -137,7 +145,104 @@ public class Principal extends javax.swing.JFrame {
             tClientes.getColumnModel().getColumn(7).setCellEditor(new DefaultCellEditor(comboBoxsub));
             
         } catch (Exception ex) { // Manejo de excepciones generales
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, "Error al actualizar tabla de usuarios", ex);
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, "Error al actualizar tabla de clientes", ex);
+        }
+    }
+     
+    public void listarTablaPagos() {
+        DefaultTableModel modelo = (DefaultTableModel) tPagos.getModel();
+        modelo.setRowCount(0);
+        try {
+            // Inicializa el servicio y obtiene la lista de ventas
+            gestionarPagos PagosService = new gestionarPagos();
+            List<Pago> pagos = PagosService.obtenerPago();
+
+            // Llena la tabla con los datos de usuarios
+            // Rellena la tabla con la lista de ventas
+            for (Pago pago : pagos) {
+                Object[] fila = {
+                pago.getValorPago(),
+                pago.getFechaPago(),
+                pago.getCedula_cliente(),
+                pago.getMatricula_venta(),
+                pago.getId_usuario()
+                };
+                modelo.addRow(fila);
+            }
+        } catch (Exception ex) { // Manejo de excepciones generales
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, "Error al actualizar tabla de pagos", ex);
+        }
+    }
+    
+    public void listarTablaProyectos() {
+        DefaultTableModel modelo = (DefaultTableModel) tProyectos.getModel();
+        modelo.setRowCount(0);
+        try {
+            // Inicializa el servicio y obtiene la lista de Proyectos
+            gestionProyectos ProyectosService = new gestionProyectos();
+            List<Proyectos> proyectos = ProyectosService.obtenerProyectos();
+
+            // Llena la tabla con los datos de usuarios
+            // Rellena la tabla con la lista de ventas
+            for (Proyectos proyecto : proyectos) {
+                Object[] fila = {
+                proyecto.getNombre(),
+                proyecto.getCantTorres(),
+                proyecto.getIdUsuario()
+                };
+                modelo.addRow(fila);
+            }
+        } catch (Exception ex) { // Manejo de excepciones generales
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, "Error al actualizar tabla de Proyectos", ex);
+        }
+    }
+    
+    public void listarTablaTorres() {
+        DefaultTableModel modelo = (DefaultTableModel) tTorres.getModel();
+        modelo.setRowCount(0);
+        try {
+            // Inicializa el servicio y obtiene la lista de Torres
+            GestionTorres TorresService = new GestionTorres();
+            List<Torres> torres = TorresService.obtenerTorres();
+
+            // Llena la tabla con los datos de usuarios
+            // Rellena la tabla con la lista de ventas
+            for (Torres torre : torres) {
+                Object[] fila = {
+                torre.getNumero_torre(),
+                torre.getCantidadAptos(),
+                torre.getId_Proyecto()
+                };
+                modelo.addRow(fila);
+            }
+        } catch (Exception ex) { // Manejo de excepciones generales
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, "Error al actualizar tabla de Torres", ex);
+        }
+    }
+    
+    public void listarTablaApartamentos() {
+        DefaultTableModel modelo = (DefaultTableModel) tAptos.getModel();
+        modelo.setRowCount(0);
+        try {
+            // Inicializa el servicio y obtiene la lista de Torres
+            gestionApartamentos aptosService = new gestionApartamentos();
+            List<Apartamentos> aptos = aptosService.obtenerApto();
+
+            // Llena la tabla con los datos de usuarios
+            // Rellena la tabla con la lista de ventas
+            for (Apartamentos apto : aptos) {
+                Object[] fila = {
+                apto.getNumApto(),
+                apto.getTipoLocal(),
+                apto.getTipoApto(),
+                apto.getTipoGaraje(),
+                apto.getArea(),
+                apto.getIdTorre(),
+                };
+                modelo.addRow(fila);
+            }
+        } catch (Exception ex) { // Manejo de excepciones generales
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, "Error al actualizar tabla de Apartamentos", ex);
         }
     }
 
@@ -171,19 +276,22 @@ public class Principal extends javax.swing.JFrame {
         jbUsuarios = new javax.swing.JButton();
         jbProyectos = new javax.swing.JButton();
         jPanelPrincipal = new javax.swing.JPanel();
-        pclInicio = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
         pclProyectos = new javax.swing.JPanel();
         pProyectos = new javax.swing.JPanel();
-        bGuardarProyecto = new javax.swing.JButton();
-        bEliminarProyecto = new javax.swing.JButton();
+        bAgregarProyecto = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
         pApartamentos = new javax.swing.JPanel();
-        bGuardarApartamento = new javax.swing.JButton();
-        bEliminarApto = new javax.swing.JButton();
+        bAgregarTorre = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tProyectos = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tTorres = new javax.swing.JTable();
+        pApartamentos1 = new javax.swing.JPanel();
+        bAgregarApto = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        tAptos = new javax.swing.JTable();
         pclUsuarios = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         bGuardar = new javax.swing.JButton();
@@ -199,7 +307,11 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         tVentas = new javax.swing.JTable();
         pclPagos = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tPagos = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        bAgregarPago = new javax.swing.JButton();
         pclReportes = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -334,37 +446,19 @@ public class Principal extends javax.swing.JFrame {
         jPanelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         jPanelPrincipal.setLayout(new java.awt.CardLayout());
 
-        pclInicio.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
-        jLabel7.setText("PRINCIPAL");
-
-        javax.swing.GroupLayout pclInicioLayout = new javax.swing.GroupLayout(pclInicio);
-        pclInicio.setLayout(pclInicioLayout);
-        pclInicioLayout.setHorizontalGroup(
-            pclInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pclInicioLayout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(152, Short.MAX_VALUE))
-        );
-        pclInicioLayout.setVerticalGroup(
-            pclInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pclInicioLayout.createSequentialGroup()
-                .addGap(188, 188, 188)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(247, Short.MAX_VALUE))
-        );
-
-        jPanelPrincipal.add(pclInicio, "pclInicio");
-
         pclProyectos.setBackground(new java.awt.Color(255, 255, 255));
 
         pProyectos.setBackground(new java.awt.Color(204, 255, 255));
 
-        bGuardarProyecto.setText("Guardar");
+        bAgregarProyecto.setText("Agregar");
+        bAgregarProyecto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAgregarProyectoActionPerformed(evt);
+            }
+        });
 
-        bEliminarProyecto.setText("Eliminar");
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel10.setText("Proyectos");
 
         javax.swing.GroupLayout pProyectosLayout = new javax.swing.GroupLayout(pProyectos);
         pProyectos.setLayout(pProyectosLayout);
@@ -372,9 +466,9 @@ public class Principal extends javax.swing.JFrame {
             pProyectosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pProyectosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bGuardarProyecto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bEliminarProyecto)
+                .addComponent(jLabel10)
+                .addGap(154, 154, 154)
+                .addComponent(bAgregarProyecto)
                 .addGap(10, 10, 10))
         );
         pProyectosLayout.setVerticalGroup(
@@ -382,16 +476,22 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pProyectosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pProyectosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bGuardarProyecto)
-                    .addComponent(bEliminarProyecto))
+                    .addComponent(bAgregarProyecto)
+                    .addComponent(jLabel10))
                 .addContainerGap())
         );
 
         pApartamentos.setBackground(new java.awt.Color(204, 255, 255));
 
-        bGuardarApartamento.setText("Guardar");
+        bAgregarTorre.setText("Agregar");
+        bAgregarTorre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAgregarTorreActionPerformed(evt);
+            }
+        });
 
-        bEliminarApto.setText("Eliminar");
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel11.setText("Torres");
 
         javax.swing.GroupLayout pApartamentosLayout = new javax.swing.GroupLayout(pApartamentos);
         pApartamentos.setLayout(pApartamentosLayout);
@@ -399,9 +499,9 @@ public class Principal extends javax.swing.JFrame {
             pApartamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pApartamentosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bGuardarApartamento)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bEliminarApto)
+                .addComponent(jLabel11)
+                .addGap(169, 169, 169)
+                .addComponent(bAgregarTorre)
                 .addGap(11, 11, 11))
         );
         pApartamentosLayout.setVerticalGroup(
@@ -409,56 +509,112 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pApartamentosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pApartamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bGuardarApartamento)
-                    .addComponent(bEliminarApto))
+                    .addComponent(bAgregarTorre)
+                    .addComponent(jLabel11))
                 .addContainerGap())
         );
 
         tProyectos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Cantidad Torres", "Usuario"
             }
         ));
         jScrollPane2.setViewportView(tProyectos);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tTorres.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Numero", "Cantidad Apartamentos", "Proyecto"
             }
         ));
-        jScrollPane4.setViewportView(jTable1);
+        jScrollPane4.setViewportView(tTorres);
+
+        pApartamentos1.setBackground(new java.awt.Color(204, 255, 255));
+
+        bAgregarApto.setText("Agregar");
+        bAgregarApto.setActionCommand("Agregar");
+        bAgregarApto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAgregarAptoActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel12.setText("Apartamentos");
+
+        javax.swing.GroupLayout pApartamentos1Layout = new javax.swing.GroupLayout(pApartamentos1);
+        pApartamentos1.setLayout(pApartamentos1Layout);
+        pApartamentos1Layout.setHorizontalGroup(
+            pApartamentos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pApartamentos1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel12)
+                .addGap(126, 126, 126)
+                .addComponent(bAgregarApto)
+                .addGap(11, 11, 11))
+        );
+        pApartamentos1Layout.setVerticalGroup(
+            pApartamentos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pApartamentos1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pApartamentos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bAgregarApto)
+                    .addComponent(jLabel12))
+                .addContainerGap())
+        );
+
+        tAptos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Numero", "Tipo Local", "Tipo Apartamento", "Tipo Garaje", "Area", "Torre"
+            }
+        ));
+        jScrollPane9.setViewportView(tAptos);
 
         javax.swing.GroupLayout pclProyectosLayout = new javax.swing.GroupLayout(pclProyectos);
         pclProyectos.setLayout(pclProyectosLayout);
         pclProyectosLayout.setHorizontalGroup(
             pclProyectosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pProyectos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pApartamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
             .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(pApartamentos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pclProyectosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pProyectos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pclProyectosLayout.setVerticalGroup(
             pclProyectosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pclProyectosLayout.createSequentialGroup()
                 .addComponent(pProyectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pApartamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pApartamentos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -637,24 +793,70 @@ public class Principal extends javax.swing.JFrame {
 
         pclPagos.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
-        jLabel8.setText("pagos");
+        tPagos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Valor Pago", "Fecha Pago", "Cedula Cliente", "Matricula Venta", "Usuario"
+            }
+        ));
+        jScrollPane8.setViewportView(tPagos);
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 51));
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel9.setText("PAGOS");
+
+        bAgregarPago.setText("Agregar");
+        bAgregarPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAgregarPagoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(207, 207, 207)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bAgregarPago)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel9)
+                .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bAgregarPago)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout pclPagosLayout = new javax.swing.GroupLayout(pclPagos);
         pclPagos.setLayout(pclPagosLayout);
         pclPagosLayout.setHorizontalGroup(
             pclPagosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pclPagosLayout.createSequentialGroup()
-                .addContainerGap(182, Short.MAX_VALUE)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102))
+            .addGroup(pclPagosLayout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
         );
         pclPagosLayout.setVerticalGroup(
             pclPagosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pclPagosLayout.createSequentialGroup()
-                .addGap(187, 187, 187)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(215, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pclPagosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanelPrincipal.add(pclPagos, "pclPagos");
@@ -853,7 +1055,6 @@ public class Principal extends javax.swing.JFrame {
 
     private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
         // Crear y mostrar el formulario para agregar usuario
-        
         AddUsuario user = new AddUsuario(this); // Cambia a la ventana principal
         user.setVisible(true);
     }//GEN-LAST:event_bGuardarActionPerformed
@@ -894,6 +1095,30 @@ public class Principal extends javax.swing.JFrame {
         cliente.setVisible(true);
     }//GEN-LAST:event_bAgregarClienteActionPerformed
 
+    private void bAgregarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAgregarPagoActionPerformed
+        // TODO add your handling code here:
+        AddPago pago = new AddPago(this); // Cambia a la ventana principal
+        pago.setVisible(true);
+    }//GEN-LAST:event_bAgregarPagoActionPerformed
+
+    private void bAgregarTorreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAgregarTorreActionPerformed
+        // TODO add your handling code here:
+        AddTorre torre = new AddTorre(this); // Cambia a la ventana principal
+        torre.setVisible(true);
+    }//GEN-LAST:event_bAgregarTorreActionPerformed
+
+    private void bAgregarProyectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAgregarProyectoActionPerformed
+        // TODO add your handling code here:
+        AddProyecto proyecto = new AddProyecto(this); // Cambia a la ventana principal
+        proyecto.setVisible(true);
+    }//GEN-LAST:event_bAgregarProyectoActionPerformed
+
+    private void bAgregarAptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAgregarAptoActionPerformed
+        // TODO add your handling code here:
+        AddApto apto = new AddApto(this); // Cambia a la ventana principal
+        apto.setVisible(true);
+    }//GEN-LAST:event_bAgregarAptoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -930,28 +1155,31 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bAgregarApto;
     private javax.swing.JButton bAgregarCliente;
+    private javax.swing.JButton bAgregarPago;
+    private javax.swing.JButton bAgregarProyecto;
+    private javax.swing.JButton bAgregarTorre;
     private javax.swing.JButton bEditar;
     private javax.swing.JButton bEliminar;
-    private javax.swing.JButton bEliminarApto;
-    private javax.swing.JButton bEliminarProyecto;
     private javax.swing.JButton bGuardar;
-    private javax.swing.JButton bGuardarApartamento;
-    private javax.swing.JButton bGuardarProyecto;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLNombreUsuario;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelMenu;
     private javax.swing.JPanel jPanelPrincipal;
     private javax.swing.JScrollPane jScrollPane1;
@@ -961,10 +1189,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSplitPane jSplitPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JButton jbPagos;
@@ -974,16 +1203,19 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jbUsuarios;
     private javax.swing.JButton jbVentas;
     private javax.swing.JPanel pApartamentos;
+    private javax.swing.JPanel pApartamentos1;
     private javax.swing.JPanel pProyectos;
-    private javax.swing.JPanel pclInicio;
     private javax.swing.JPanel pclPagos;
     private javax.swing.JPanel pclProyectos;
     private javax.swing.JPanel pclReportes;
     private javax.swing.JPanel pclTyA;
     private javax.swing.JPanel pclUsuarios;
     private javax.swing.JPanel pclVentas;
+    private javax.swing.JTable tAptos;
     private javax.swing.JTable tClientes;
+    private javax.swing.JTable tPagos;
     private javax.swing.JTable tProyectos;
+    private javax.swing.JTable tTorres;
     private javax.swing.JTable tVentas;
     private javax.swing.JTable tableUsuarios;
     // End of variables declaration//GEN-END:variables

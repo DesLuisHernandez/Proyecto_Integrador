@@ -4,10 +4,23 @@
  */
 package main.proyecto.integrador.Logica;
 
+import java.util.List;
+import main.proyecto.integrador.Datos.Proyectos;
+import main.proyecto.integrador.Datos.ProyectosDAO;
+
+
 /**
  *
  * @author genny
  */
 public class gestionProyectos {
+    private ProyectosDAO proyectoDAO = new ProyectosDAO(); 
     
+    public List<Proyectos> obtenerProyectos() {
+        return proyectoDAO.listar();
+    }  
+    
+    public boolean registrarProyectos(Proyectos proyecto) {
+        return proyectoDAO.agregar(proyecto);
+    }
 }

@@ -9,54 +9,39 @@ package main.proyecto.integrador.Datos;
  * @author genny
  */
 public class Apartamentos {
-    private int idApartamento;
-    private int idTorre;
-    private int matricula;
-    private int numeroApto;
-    private double valorApto;
+    private int numApto;
+    private String tipoLocal;
     private String tipoApto;
-    private int area;
-    private String asesorVenta;
-    private String MatriculaVenta;
+    private String tipoGaraje;
+    private double area;
+    private String idTorre;
 
-    public int getIdApartamento() {
-        return idApartamento;
-    }
-
-    public void setIdApartamento(int idApartamento) {
-        this.idApartamento = idApartamento;
-    }
-
-    public int getIdTorre() {
-        return idTorre;
-    }
-
-    public void setIdTorre(int idTorre) {
+    public Apartamentos(int numApto, String tipoLocal, String tipoApto, String tipoGaraje, double area, String idTorre) {
+        this.numApto = numApto;
+        this.tipoLocal = tipoLocal;
+        this.tipoApto = tipoApto;
+        this.tipoGaraje = tipoGaraje;
+        this.area = area;
         this.idTorre = idTorre;
     }
 
-    public int getMatricula() {
-        return matricula;
+    public Apartamentos() {
     }
 
-    public void setMatricula(int matricula) {
-        this.matricula = matricula;
+    public int getNumApto() {
+        return numApto;
     }
 
-    public int getNumeroApto() {
-        return numeroApto;
+    public void setNumApto(int numApto) {
+        this.numApto = numApto;
     }
 
-    public void setNumeroApto(int numeroApto) {
-        this.numeroApto = numeroApto;
+    public String getTipoLocal() {
+        return tipoLocal;
     }
 
-    public double getValorApto() {
-        return valorApto;
-    }
-
-    public void setValorApto(double valorApto) {
-        this.valorApto = valorApto;
+    public void setTipoLocal(String tipoLocal) {
+        this.tipoLocal = tipoLocal;
     }
 
     public String getTipoApto() {
@@ -67,32 +52,29 @@ public class Apartamentos {
         this.tipoApto = tipoApto;
     }
 
-    public int getArea() {
+    public String getTipoGaraje() {
+        return tipoGaraje;
+    }
+
+    public void setTipoGaraje(String tipoGaraje) {
+        this.tipoGaraje = tipoGaraje;
+    }
+
+    public double getArea() {
         return area;
     }
 
-    public void setArea(int area) {
+    public void setArea(double area) {
         this.area = area;
     }
 
-    public String getAsesorVenta() {
-        return asesorVenta;
+    public String getIdTorre() {
+        return idTorre;
     }
 
-    public void setAsesorVenta(String asesorVenta) {
-        this.asesorVenta = asesorVenta;
+    public void setIdTorre(String idTorre) {
+        this.idTorre = idTorre;
     }
 
-    public String getMatriculaVenta() {
-        return MatriculaVenta;
-    }
-
-    public void setMatriculaVenta(String MatriculaVenta) {
-        this.MatriculaVenta = MatriculaVenta;
-    }
-
-    @Override
-    public String toString() {
-        return "Apartamentos{" + "idApartamento=" + idApartamento + ", idTorre=" + idTorre + ", matricula=" + matricula + ", numeroApto=" + numeroApto + ", valorApto=" + valorApto + ", tipoApto=" + tipoApto + ", area=" + area + ", asesorVenta=" + asesorVenta + ", MatriculaVenta=" + MatriculaVenta + '}';
-    }
+   
 }

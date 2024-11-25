@@ -9,43 +9,45 @@ package main.proyecto.integrador.Datos;
  * @author genny
  */
 public class Proyectos {
-    
-    private int idProyecto;
-    private int numero_torres;
-    private int numeroApto; 
-
-    public Proyectos(int idProyecto, int numero_torres, int numeroApto) {
-        this.idProyecto = idProyecto;
-        this.numero_torres = numero_torres;
-        this.numeroApto = numeroApto;
-    }
-
-    public int getIdProyecto() {
-        return idProyecto;
-    }
-
-    public void setIdProyecto(int idProyecto) {
-        this.idProyecto = idProyecto;
-    }
-
-    public int getNumero_torres() {
-        return numero_torres;
-    }
-
-    public void setNumero_torres(int numero_torres) {
-        this.numero_torres = numero_torres;
-    }
-
-    public int getNumeroApto() {
-        return numeroApto;
-    }
-
-    public void setNumeroApto(int numeroApto) {
-        this.numeroApto = numeroApto;
-    }
+    private String Nombre;
+    private int cantTorres;
+    private String idUsuario; 
 
     @Override
     public String toString() {
-        return "Proyectos{" + "idProyecto=" + idProyecto + ", numero_torres=" + numero_torres + ", numeroApto=" + numeroApto + '}';
-    } 
+        return "Proyectos{" + "Nombre=" + Nombre + ", cantTorres=" + cantTorres + ", idUsuario=" + idUsuario + '}';
+    }
+
+    public String getNombre() {
+        return Nombre;
+    }
+
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
+
+    public int getCantTorres() {
+        return cantTorres;
+    }
+
+    public void setCantTorres(int cantTorres) {
+        this.cantTorres = cantTorres;
+    }
+
+    public Proyectos(String Nombre, int cantTorres, String idUsuario) {
+        this.Nombre = Nombre;
+        this.cantTorres = cantTorres;
+        this.idUsuario = idUsuario;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Proyectos() {
+    }   
 }

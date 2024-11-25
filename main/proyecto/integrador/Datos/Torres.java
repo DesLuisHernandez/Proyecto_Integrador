@@ -9,32 +9,17 @@ package main.proyecto.integrador.Datos;
  * @author genny
  */
 public class Torres {
-    private int idTorre;
-    private int idProyecto;
     private int numero_torre;
-    private int numeroApto;
+    private int cantidadAptos;
+    private String id_Proyecto;
 
-    public Torres(int idTorre, int idProyecto, int numero_torre, int numeroApto) {
-        this.idTorre = idTorre;
-        this.idProyecto = idProyecto;
+    public Torres() {
+    }
+
+    public Torres(int numero_torre, int cantidadAptos, String id_Proyecto) {
         this.numero_torre = numero_torre;
-        this.numeroApto = numeroApto;
-    }
-
-    public int getIdTorre() {
-        return idTorre;
-    }
-
-    public void setIdTorre(int idTorre) {
-        this.idTorre = idTorre;
-    }
-
-    public int getIdProyecto() {
-        return idProyecto;
-    }
-
-    public void setIdProyecto(int idProyecto) {
-        this.idProyecto = idProyecto;
+        this.cantidadAptos = cantidadAptos;
+        this.id_Proyecto = id_Proyecto;
     }
 
     public int getNumero_torre() {
@@ -45,17 +30,19 @@ public class Torres {
         this.numero_torre = numero_torre;
     }
 
-    public int getNumeroApto() {
-        return numeroApto;
+    public int getCantidadAptos() {
+        return cantidadAptos;
     }
 
-    public void setNumeroApto(int numeroApto) {
-        this.numeroApto = numeroApto;
+    public void setCantidadAptos(int cantidadAptos) {
+        this.cantidadAptos = cantidadAptos;
     }
 
-    @Override
-    public String toString() {
-        return "Torres{" + "idTorre=" + idTorre + ", idProyecto=" + idProyecto + ", numero_torre=" + numero_torre + ", numeroApto=" + numeroApto + '}';
+    public String getId_Proyecto() {
+        return id_Proyecto;
     }
-    
+
+    public void setId_Proyecto(String id_Proyecto) {
+        this.id_Proyecto = id_Proyecto;
+    }
 }
