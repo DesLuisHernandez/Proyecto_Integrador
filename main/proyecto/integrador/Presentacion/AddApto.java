@@ -16,11 +16,13 @@ import main.proyecto.integrador.Logica.gestionarUsuario;
  */
 public class AddApto extends javax.swing.JFrame {
     private Principal principal;
+    gestionApartamentos aptoService = new gestionApartamentos();
     
      // Constructor que recibe la instancia de Principal
     public AddApto(Principal principal) {
         this.principal = principal;
         initComponents();
+        aptoService.llenarComboBoxTorres(cbTorre);
         // Centrar la ventana
         setLocationRelativeTo(null);
     }
@@ -56,14 +58,15 @@ public class AddApto extends javax.swing.JFrame {
         tTipoApto = new javax.swing.JTextField();
         tTipoGaraje = new javax.swing.JTextField();
         tArea = new javax.swing.JTextField();
-        tTorre = new javax.swing.JTextField();
+        cbTorre = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        jPanel2.setBackground(new java.awt.Color(255, 153, 0));
+        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
 
+        jLabel1.setBackground(new java.awt.Color(204, 255, 255));
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         jLabel1.setText("Agregar apartamento");
 
@@ -72,9 +75,9 @@ public class AddApto extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
+                .addContainerGap(54, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,7 +87,7 @@ public class AddApto extends javax.swing.JFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 153, 0));
+        jPanel3.setBackground(new java.awt.Color(204, 255, 255));
 
         bAdd.setText("Aceptar");
         bAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -128,13 +131,15 @@ public class AddApto extends javax.swing.JFrame {
 
         jLabel6.setText("Area :");
 
-        jLabel7.setText("Torre");
+        jLabel7.setText("Torre:");
 
         tArea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tAreaActionPerformed(evt);
             }
         });
+
+        cbTorre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -158,7 +163,7 @@ public class AddApto extends javax.swing.JFrame {
                     .addComponent(tTipoApto, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(tTipoGaraje, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(tArea, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tTorre, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(cbTorre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
         );
         jPanel1Layout.setVerticalGroup(
@@ -174,21 +179,21 @@ public class AddApto extends javax.swing.JFrame {
                     .addComponent(tTipoLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(tTipoApto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(tTipoGaraje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(tArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tTipoApto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tTipoGaraje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(tTorre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbTorre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -215,14 +220,17 @@ public class AddApto extends javax.swing.JFrame {
         String tipoLocal = tTipoLocal.getText();
         String tipoApto = tTipoApto.getText();
         String tipoGaraje = tTipoGaraje.getText();
-        int area = Integer.parseInt(tArea.getText());
-        String idTorre = tTorre.getText();
+        int area = Integer.parseInt(tArea.getText());        
+        String idTorre = aptoService.obtenerIdTorreSeleccionada(cbTorre);
+        if (idTorre == null || idTorre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una torre válido.");
+            return;
+        }
         
         Apartamentos nuevoApto = new Apartamentos(numero, tipoLocal, tipoApto, tipoGaraje, area, idTorre);
-        gestionApartamentos aptoService = new gestionApartamentos();
         
         if (aptoService.registrarApto(nuevoApto)) {
-            JOptionPane.showMessageDialog(this, "Apartamento registrada exitosamente");
+            JOptionPane.showMessageDialog(this, "Apartamento registrado exitosamente");
 
             // Llama al método listarTablaProyectos en la instancia principal
             if (principal != null) {
@@ -282,6 +290,7 @@ public class AddApto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAdd;
     private javax.swing.JButton bCancel;
+    private javax.swing.JComboBox<String> cbTorre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -297,6 +306,5 @@ public class AddApto extends javax.swing.JFrame {
     private javax.swing.JTextField tTipoApto;
     private javax.swing.JTextField tTipoGaraje;
     private javax.swing.JTextField tTipoLocal;
-    private javax.swing.JTextField tTorre;
     // End of variables declaration//GEN-END:variables
 }

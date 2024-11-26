@@ -17,11 +17,13 @@ import main.proyecto.integrador.Logica.gestionarVenta;
  */
 public class AddProyecto extends javax.swing.JFrame {
     private Principal principal;
+    gestionProyectos gestionproyecto = new gestionProyectos();
     
      // Constructor que recibe la instancia de Principal
     public AddProyecto(Principal principal) {
         this.principal = principal;
         initComponents();
+        gestionproyecto.llenarComboBoxUsuarios(cbUsuario);
         // Centrar la ventana
         setLocationRelativeTo(null);
     }
@@ -48,10 +50,10 @@ public class AddProyecto extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         tNombre = new javax.swing.JTextField();
         tCanTorres = new javax.swing.JTextField();
-        tUsuario = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         bAdd = new javax.swing.JButton();
         bCancel = new javax.swing.JButton();
+        cbUsuario = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,6 +122,8 @@ public class AddProyecto extends javax.swing.JFrame {
                 .addComponent(bCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        cbUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -135,7 +139,7 @@ public class AddProyecto extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                     .addComponent(tCanTorres, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tUsuario, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(cbUsuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -154,7 +158,7 @@ public class AddProyecto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(tUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -177,13 +181,16 @@ public class AddProyecto extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nombre = tNombre.getText();
         int canTorres = Integer.parseInt(tCanTorres.getText());
-        String idUsuario = tUsuario.getText();
+        String idUsuario = gestionproyecto.obtenerIdUsuarioSeleccionado(cbUsuario);
+        if (idUsuario == null || idUsuario.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un usuario válido.");
+            return;
+        }
         
         Proyectos nuevoProyecto = new Proyectos(nombre,canTorres,idUsuario);
         gestionProyectos ProyectosService = new gestionProyectos();
-        
          // Agregar el nuevo usuario si no existe
-        if (ProyectosService.registrarProyectos(nuevoProyecto)) {
+        /*if (ProyectosService.registrarProyectos(nuevoProyecto)) {
             JOptionPane.showMessageDialog(this, "Proyecto registrado exitosamente");
 
             // Llama al método listarTablaProyectos en la instancia principal
@@ -193,8 +200,19 @@ public class AddProyecto extends javax.swing.JFrame {
             dispose(); // Cierra el formulario
             } else {
                 JOptionPane.showMessageDialog(this, "Error al agregar el Proyecto");
-            }
+            }*/
+        // Agregar el nuevo proyecto
+        if (ProyectosService.registrarProyectos(nuevoProyecto)) {
+            JOptionPane.showMessageDialog(this, "Proyecto registrado exitosamente");
 
+        // Llama al método listarTablaProyectos en la instancia principal
+        if (principal != null) {
+            principal.listarTablaProyectos();
+        }
+            dispose(); // Cierra el formulario
+        } else {
+        JOptionPane.showMessageDialog(this, "Error al agregar el Proyecto");
+       }
     }//GEN-LAST:event_bAddActionPerformed
 
     private void bCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelActionPerformed
@@ -241,6 +259,7 @@ public class AddProyecto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAdd;
     private javax.swing.JButton bCancel;
+    private javax.swing.JComboBox<String> cbUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -250,6 +269,5 @@ public class AddProyecto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField tCanTorres;
     private javax.swing.JTextField tNombre;
-    private javax.swing.JTextField tUsuario;
     // End of variables declaration//GEN-END:variables
 }

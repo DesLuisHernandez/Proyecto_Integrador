@@ -10,7 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -59,5 +61,66 @@ public static List<Pago> listar() {
             return false; // Retorna false en caso de error
         }
     }
+        
+    public Map<String, String> obtenerClientes() {
+        Map<String, String> proyectoMap = new HashMap<>();
+        String sql = "SELECT CEDULA, NOMBRE FROM CLIENTE";
+    
+        try (Connection conn = Conexion.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                String cedCliente = rs.getString("CEDULA"); // Cambiar a getString
+                String nombreCliente = rs.getString("NOMBRE");
+                proyectoMap.put(nombreCliente, cedCliente); // Relacionar nombre con id
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al obtener los clientes: " + e.getMessage());
+        }
+        return proyectoMap;
+    }
+    
+    public Map<String, String> obtenerAVenta() {
+        Map<String, String> proyectoMap = new HashMap<>();
+        String sql = "SELECT MATRICULA, PRECIO_TOTAL FROM VENTA";
+    
+        try (Connection conn = Conexion.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                String idMatricula = rs.getString("MATRICULA"); // Cambiar a getString
+                String nombreMatricula = rs.getString("PRECIO_TOTAL");
+                proyectoMap.put(nombreMatricula, idMatricula); // Relacionar nombre con id
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al obtener las ventas: " + e.getMessage());
+        }
+        return proyectoMap;
+    }
+    
+    public Map<String, String> obtenerUsuarios() {
+        Map<String, String> proyectoMap = new HashMap<>();
+        String sql = """ 
+        SELECT U.ID, U.NOMBRE 
+        FROM USUARIO U, USUARIO_ROL UR
+        WHERE U.ID = UR.USUARIO_ID
+        AND UR.ROL_ID = 2     
+        """;
+        try (Connection conn = Conexion.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                String idUsuario = rs.getString("ID"); // Cambiar a getString
+                String nombreUsuario = rs.getString("NOMBRE");
+                proyectoMap.put(nombreUsuario, idUsuario); // Relacionar nombre con id
+            }
+        } catch (SQLException e) {
+        e.printStackTrace();
+        throw new RuntimeException("Error al obtener los usuarios: " + e.getMessage());
+        }
+        return proyectoMap;
+    } 
     
 }

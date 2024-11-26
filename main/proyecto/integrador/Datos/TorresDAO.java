@@ -9,7 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -18,7 +20,11 @@ import java.util.List;
 public class TorresDAO {
     public List<Torres> listar() {
         List<Torres> listaTorres= new ArrayList<>();
-        String sql = "SELECT * FROM TORRES";
+        String sql = """ 
+        SELECT T.NUMERO_TORRE, T.CANTIDAD_APTOS, P.NOMBRE
+        FROM TORRES T, PROYECTOS P
+        WHERE T.ID_PROYECTO = P.ID        
+        """;
         try (Connection conn = Conexion.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
@@ -27,7 +33,7 @@ public class TorresDAO {
                 Torres torre = new Torres();
                 torre.setNumero_torre(rs.getInt("NUMERO_TORRE"));
                 torre.setCantidadAptos(rs.getInt("CANTIDAD_APTOS"));
-                torre.setId_Proyecto(rs.getString("ID_PROYECTO"));
+                torre.setId_Proyecto(rs.getString("NOMBRE"));
                 listaTorres.add(torre);
             }
         } catch (SQLException e) {
@@ -50,5 +56,25 @@ public class TorresDAO {
             e.printStackTrace();
             return false; // Retorna false en caso de error
         }
-    }    
+    }  
+    
+    public Map<String, String> obtenerProyectos() {
+        Map<String, String> proyectoMap = new HashMap<>();
+        String sql = "SELECT ID, NOMBRE FROM PROYECTOS";
+    
+        try (Connection conn = Conexion.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                String idProyecto = rs.getString("ID"); // Cambiar a getString
+                String nombreProyecto = rs.getString("NOMBRE");
+                proyectoMap.put(nombreProyecto, idProyecto); // Relacionar nombre con id
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al obtener los proyectos: " + e.getMessage());
+        }
+        return proyectoMap;
+    }
+     
 }

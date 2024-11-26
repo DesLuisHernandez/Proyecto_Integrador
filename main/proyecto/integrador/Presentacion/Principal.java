@@ -99,12 +99,16 @@ public class Principal extends javax.swing.JFrame {
             // Rellena la tabla con la lista de ventas
             for (Venta venta : ventas) {
                 Object[] fila = {
-                venta.getPrecioTotal(),
-                venta.getNumCuotas(),
+                venta.getMatricula(),
+                venta.getPrecio_Total(),
+                venta.getCantidad_Cuotas(),
                 venta.getIntereses(),
-                venta.getCedCliente(),
-                venta.getCedAsesor(),
-                venta.getMatriculaApto()
+                venta.getFecha_esctritura_venta(),
+                venta.getFecha_venta(),
+                venta.getValorSubsidio(),
+                venta.getId_Apto(),
+                venta.getCedula_Cliente(),
+                venta.getId_Usuario()
                 };
                 modelo.addRow(fila);
             }
@@ -543,7 +547,6 @@ public class Principal extends javax.swing.JFrame {
         pApartamentos1.setBackground(new java.awt.Color(204, 255, 255));
 
         bAgregarApto.setText("Agregar");
-        bAgregarApto.setActionCommand("Agregar");
         bAgregarApto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bAgregarAptoActionPerformed(evt);
@@ -760,13 +763,13 @@ public class Principal extends javax.swing.JFrame {
 
         tVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Precio Total", "Número Cuotas", "Intereses", "Cedula Cliente", "Cedula Asesor", "Matricula Apartamento"
+                "Matricula", "Precio total", "Cantidad cuotas", "Intereses", "Fecha escritura", "Fecha venta", "Valor subsidio", "Apartamento", "Cliente", "Usuario"
             }
         ));
         jScrollPane6.setViewportView(tVentas);
@@ -956,6 +959,9 @@ public class Principal extends javax.swing.JFrame {
         // Verificar si el rol es "Administrador"
         if (rol.equalsIgnoreCase("ADMINISTRADOR")) {
             cardLayout.show(jPanelPrincipal, "pclProyectos");
+            listarTablaProyectos();
+            listarTablaTorres();
+            listarTablaApartamentos();
         } else {
             // Mostrar mensaje de error
             JOptionPane.showMessageDialog(this, "No tienes permisos para realizar esta acción.", "Permiso denegado", JOptionPane.WARNING_MESSAGE);
@@ -994,6 +1000,7 @@ public class Principal extends javax.swing.JFrame {
         if (rol.equalsIgnoreCase("ASESOR")) {
             //Cambia la vista a pclUsuarios
             cardLayout.show(jPanelPrincipal, "pclPagos");
+            listarTablaPagos();
         } else {
             // Mostrar mensaje de error
             JOptionPane.showMessageDialog(this, "No tienes permisos para realizar esta acción.", "Permiso denegado", JOptionPane.WARNING_MESSAGE);

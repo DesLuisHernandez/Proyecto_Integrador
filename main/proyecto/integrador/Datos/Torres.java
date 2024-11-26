@@ -45,4 +45,9 @@ public class Torres {
     public void setId_Proyecto(String id_Proyecto) {
         this.id_Proyecto = id_Proyecto;
     }
+
+    @Override
+    public String toString() {
+        return "Torres{" + "numero_torre=" + numero_torre + ", cantidadAptos=" + cantidadAptos + ", id_Proyecto=" + id_Proyecto + '}';
+    }
 }

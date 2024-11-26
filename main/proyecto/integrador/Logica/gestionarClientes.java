@@ -5,6 +5,8 @@
 package main.proyecto.integrador.Logica;
 
 import java.util.List;
+import java.util.Map;
+import javax.swing.JComboBox;
 import main.proyecto.integrador.Datos.Cliente;
 import main.proyecto.integrador.Datos.ClienteDAO;
 
@@ -24,4 +26,5 @@ public class gestionarClientes {
     public boolean registrarCliente(Cliente cliente) {
         return ClienteDAO.agregar(cliente);
     }
+    
 }

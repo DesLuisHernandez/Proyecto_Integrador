@@ -4,45 +4,63 @@
  */
 package main.proyecto.integrador.Datos;
 
+import java.util.Date;
+
 /**
  *
  * @author genny
  */
 
 public class Venta {
-    private double precioTotal;
-    private int numCuotas;
+    private double matricula;
+    private double precio_Total;
+    private double cantidad_Cuotas;
     private double intereses;
-    private String cedCliente;
-    private String cedAsesor;
-    private String matriculaApto;    
+    private Date fecha_esctritura_venta;
+    private Date fecha_venta;
+    private double valorSubsidio;
+    private String id_Apto;  
+    private String cedula_Cliente;
+    private String id_Usuario;
 
     public Venta() {
     }
 
-    public Venta(double precioTotal, int numCuotas, double intereses, String cedCliente, String cedAsesor, String matriculaApto) {
-        this.precioTotal = precioTotal;
-        this.numCuotas = numCuotas;
+    public Venta(double matricula, double precio_Total, int cantidad_Cuotas, double intereses, Date fecha_esctritura_venta, Date fecha_venta, double valorSubsidio, String id_Apto, String cedula_Cliente, String id_Usuario) {
+        this.matricula = matricula;
+        this.precio_Total = precio_Total;
+        this.cantidad_Cuotas = cantidad_Cuotas;
         this.intereses = intereses;
-        this.cedCliente = cedCliente;
-        this.cedAsesor = cedAsesor;
-        this.matriculaApto = matriculaApto;
+        this.fecha_esctritura_venta = fecha_esctritura_venta;
+        this.fecha_venta = fecha_venta;
+        this.valorSubsidio = valorSubsidio;
+        this.id_Apto = id_Apto;
+        this.cedula_Cliente = cedula_Cliente;
+        this.id_Usuario = id_Usuario;
     }
 
-    public double getPrecioTotal() {
-        return precioTotal;
+    public double getMatricula() {
+        return matricula;
     }
 
-    public void setPrecioTotal(double precioTotal) {
-        this.precioTotal = precioTotal;
+    public void setMatricula(double matricula) {
+        this.matricula = matricula;
     }
 
-    public int getNumCuotas() {
-        return numCuotas;
+    public double getPrecio_Total() {
+        return precio_Total;
     }
 
-    public void setNumCuotas(int numCuotas) {
-        this.numCuotas = numCuotas;
+    public void setPrecio_Total(double precio_Total) {
+        this.precio_Total = precio_Total;
+    }
+
+    public double getCantidad_Cuotas() {
+        return cantidad_Cuotas;
+    }
+
+    public void setCantidad_Cuotas(int cantidad_Cuotas) {
+        this.cantidad_Cuotas = cantidad_Cuotas;
     }
 
     public double getIntereses() {
@@ -53,32 +71,57 @@ public class Venta {
         this.intereses = intereses;
     }
 
-    public String getCedCliente() {
-        return cedCliente;
+    public Date getFecha_esctritura_venta() {
+        return fecha_esctritura_venta;
     }
 
-    public void setCedCliente(String cedCliente) {
-        this.cedCliente = cedCliente;
+    public void setFecha_esctritura_venta(Date fecha_esctritura_venta) {
+        this.fecha_esctritura_venta = fecha_esctritura_venta;
     }
 
-    public String getCedAsesor() {
-        return cedAsesor;
+    public Date getFecha_venta() {
+        return fecha_venta;
     }
 
-    public void setCedAsesor(String cedAsesor) {
-        this.cedAsesor = cedAsesor;
+    public void setFecha_venta(Date fecha_venta) {
+        this.fecha_venta = fecha_venta;
     }
 
-    public String getMatriculaApto() {
-        return matriculaApto;
+    public double getValorSubsidio() {
+        return valorSubsidio;
     }
 
-    public void setMatriculaApto(String matriculaApto) {
-        this.matriculaApto = matriculaApto;
+    public void setValorSubsidio(double valorSubsidio) {
+        this.valorSubsidio = valorSubsidio;
+    }
+
+    public String getId_Apto() {
+        return id_Apto;
+    }
+
+    public void setId_Apto(String id_Apto) {
+        this.id_Apto = id_Apto;
+    }
+
+    public String getCedula_Cliente() {
+        return cedula_Cliente;
+    }
+
+    public void setCedula_Cliente(String cedula_Cliente) {
+        this.cedula_Cliente = cedula_Cliente;
+    }
+
+    public String getId_Usuario() {
+        return id_Usuario;
+    }
+
+    public void setId_Usuario(String id_Usuario) {
+        this.id_Usuario = id_Usuario;
     }
 
     @Override
     public String toString() {
-        return "Venta{" + "precioTotal=" + precioTotal + ", numCuotas=" + numCuotas + ", intereses=" + intereses + ", cedCliente=" + cedCliente + ", cedAsesor=" + cedAsesor + ", matriculaApto=" + matriculaApto + '}';
+        return "Venta{" + "matricula=" + matricula + ", precio_Total=" + precio_Total + ", cantidad_Cuotas=" + cantidad_Cuotas + ", intereses=" + intereses + ", fecha_esctritura_venta=" + fecha_esctritura_venta + ", fecha_venta=" + fecha_venta + ", valorSubsidio=" + valorSubsidio + ", id_Apto=" + id_Apto + ", cedula_Cliente=" + cedula_Cliente + ", id_Usuario=" + id_Usuario + '}';
     }
+      
 }

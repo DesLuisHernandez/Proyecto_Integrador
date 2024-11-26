@@ -9,7 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -18,7 +20,11 @@ import java.util.List;
 public class ApartamentosDAO {
     public static List<Apartamentos> listar() {
         List<Apartamentos> listaAptos = new ArrayList<>();
-        String sql = "SELECT * FROM APARTAMENTO"; 
+        String sql = """ 
+        SELECT A.*, T.NUMERO_TORRE
+        FROM APARTAMENTO A, TORRES T
+        WHERE A.ID_TORRE = T.ID   
+        """;
         try (Connection conn = Conexion.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
@@ -30,7 +36,7 @@ public class ApartamentosDAO {
                 Apto.setTipoApto(rs.getString("TIPO_APTO"));
                 Apto.setTipoGaraje(rs.getString("TIPO_GARAJE"));
                 Apto.setArea(rs.getInt("AREA")); 
-                Apto.setIdTorre(rs.getString("ID_TORRE")); 
+                Apto.setIdTorre(rs.getString("NUMERO_TORRE")); 
                 listaAptos.add(Apto);
             }
         } catch (SQLException e) {
@@ -55,5 +61,23 @@ public class ApartamentosDAO {
             e.printStackTrace();
             return false; // Retorna false en caso de error
         }
+    }
+    
+    public Map<String, String> obtenerTorres() {
+        Map<String, String> proyectoMap = new HashMap<>();
+        String sql = "SELECT ID, NUMERO_TORRE FROM TORRES";
+        try (Connection conn = Conexion.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                String idUsuario = rs.getString("ID"); // Cambiar a getString
+                String nombreUsuario = rs.getString("NUMERO_TORRE");
+                proyectoMap.put(nombreUsuario, idUsuario); // Relacionar nombre con id
+            }
+        } catch (SQLException e) {
+        e.printStackTrace();
+        throw new RuntimeException("Error al obtener los usuarios: " + e.getMessage());
+        }
+    return proyectoMap;
     }
 }

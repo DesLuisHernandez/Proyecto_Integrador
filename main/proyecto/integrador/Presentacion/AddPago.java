@@ -18,11 +18,15 @@ import main.proyecto.integrador.Logica.gestionarVenta;
  */
 public class AddPago extends javax.swing.JFrame {
     private Principal principal;
+    gestionarPagos pagosService = new gestionarPagos();
     
      // Constructor que recibe la instancia de Principal
     public AddPago(Principal principal) {
         this.principal = principal;
         initComponents();
+        pagosService.llenarComboBoxVenta(cbVenta);
+        pagosService.llenarComboBoxCliente(cbCliente);
+        pagosService.llenarComboBoxUsuarios(cbUusario);
         // Centrar la ventana
         setLocationRelativeTo(null);
     }
@@ -50,13 +54,13 @@ public class AddPago extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         tValorPago = new javax.swing.JTextField();
-        tCedCliente = new javax.swing.JTextField();
-        tMatVenta = new javax.swing.JTextField();
-        tUsuario = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         bAdd = new javax.swing.JButton();
         bCancel = new javax.swing.JButton();
         jFecha = new de.wannawork.jcalendar.JCalendarComboBox();
+        cbCliente = new javax.swing.JComboBox<>();
+        cbVenta = new javax.swing.JComboBox<>();
+        cbUusario = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,7 +96,7 @@ public class AddPago extends javax.swing.JFrame {
 
         jLabel6.setText("Matricula venta:");
 
-        jLabel7.setText("Usuario");
+        jLabel7.setText("Usuario:");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 102));
 
@@ -127,6 +131,12 @@ public class AddPago extends javax.swing.JFrame {
             .addComponent(bCancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        cbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbVenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbUusario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -143,10 +153,10 @@ public class AddPago extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tValorPago, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                    .addComponent(tCedCliente, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tUsuario, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tMatVenta)
-                    .addComponent(jFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbVenta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbUusario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -163,19 +173,19 @@ public class AddPago extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(tCedCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(tMatVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(tUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cbUusario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,7 +196,7 @@ public class AddPago extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -196,20 +206,20 @@ public class AddPago extends javax.swing.JFrame {
         // TODO add your handling code here:
         Double valorPago = Double.parseDouble(tValorPago.getText());
         Date fechaPago = jFecha.getDate();  // Obtener la fecha 
-        Double cedCliente =  Double.parseDouble(tCedCliente.getText());
-        Double matriculaVenta = Double.parseDouble(tMatVenta.getText());
-        String usuario = tUsuario.getText();
         
+        int cedCliente = Integer.parseInt(pagosService.obtenerIdClienteSeleccionado(cbCliente)); 
+        String usuario = pagosService.obtenerIdUsuarioSeleccionado(cbUusario); 
+        double matriculaVenta = Double.parseDouble(pagosService.obtenerIdVentaSeleccionado(cbVenta)); 
+                
         Pago nuevoPago = new Pago(valorPago,fechaPago,cedCliente,matriculaVenta,usuario);
-        gestionarPagos ventaSerice = new gestionarPagos();
         
          // Agregar el nuevo usuario si no existe
-        if (ventaSerice.registrarPago(nuevoPago)) {
+        if (pagosService.registrarPago(nuevoPago)) {
             JOptionPane.showMessageDialog(this, "Pago registrado exitosamente");
 
             // Llama al método listarTablaUsuarios en la instancia principal
             if (principal != null) {
-                principal.listarTablaVentas();
+                principal.listarTablaPagos();
             }
             dispose(); // Cierra el formulario
             } else {
@@ -262,6 +272,9 @@ public class AddPago extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAdd;
     private javax.swing.JButton bCancel;
+    private javax.swing.JComboBox<String> cbCliente;
+    private javax.swing.JComboBox<String> cbUusario;
+    private javax.swing.JComboBox<String> cbVenta;
     private de.wannawork.jcalendar.JCalendarComboBox jFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -272,9 +285,6 @@ public class AddPago extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField tCedCliente;
-    private javax.swing.JTextField tMatVenta;
-    private javax.swing.JTextField tUsuario;
     private javax.swing.JTextField tValorPago;
     // End of variables declaration//GEN-END:variables
 }

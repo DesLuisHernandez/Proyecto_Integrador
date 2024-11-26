@@ -19,13 +19,16 @@ import main.proyecto.integrador.Logica.gestionarVenta;
  */
 public class AddTorre extends javax.swing.JFrame {
     private Principal principal;
+    GestionTorres gestionTorres = new GestionTorres();
     
      // Constructor que recibe la instancia de Principal
     public AddTorre(Principal principal) {
         this.principal = principal;
         initComponents();
+        gestionTorres.llenarComboBoxProyectos(cbProyecto);
         // Centrar la ventana
         setLocationRelativeTo(null);
+        
     }
     
     public AddTorre() {
@@ -50,10 +53,10 @@ public class AddTorre extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         tNumero = new javax.swing.JTextField();
         tCanAptos = new javax.swing.JTextField();
-        tProyecto = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         bAdd = new javax.swing.JButton();
         bCancel = new javax.swing.JButton();
+        cbProyecto = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,7 +88,7 @@ public class AddTorre extends javax.swing.JFrame {
 
         jLabel3.setText("Cantidad Aptos :");
 
-        jLabel4.setText("Proyecto");
+        jLabel4.setText("Proyecto:");
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -121,6 +124,8 @@ public class AddTorre extends javax.swing.JFrame {
                 .addComponent(bCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        cbProyecto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -136,7 +141,7 @@ public class AddTorre extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tNumero, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                     .addComponent(tCanAptos, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tProyecto, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(cbProyecto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -155,7 +160,7 @@ public class AddTorre extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(tProyecto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbProyecto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -178,9 +183,15 @@ public class AddTorre extends javax.swing.JFrame {
         // TODO add your handling code here:
         int numero  = Integer.parseInt(tNumero.getText());
         int canAptos = Integer.parseInt(tCanAptos.getText());
-        String idproyecto = tProyecto.getText();
         
-        Torres nuevaTorre = new Torres(numero,canAptos,idproyecto);
+        String idProyecto = gestionTorres.obtenerIdProyectoSeleccionado(cbProyecto); 
+        
+        if (idProyecto == null || idProyecto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un proyecto válido.");
+            return;
+        }
+        
+        Torres nuevaTorre = new Torres(numero,canAptos,idProyecto);
         GestionTorres TorresService = new GestionTorres();
         
          // Agregar el nuevo usuario si no existe
@@ -194,8 +205,7 @@ public class AddTorre extends javax.swing.JFrame {
             dispose(); // Cierra el formulario
             } else {
                 JOptionPane.showMessageDialog(this, "Error al agregar el Proyecto");
-            }
-
+        }
     }//GEN-LAST:event_bAddActionPerformed
 
     private void bCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelActionPerformed
@@ -242,6 +252,7 @@ public class AddTorre extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAdd;
     private javax.swing.JButton bCancel;
+    private javax.swing.JComboBox<String> cbProyecto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -251,6 +262,5 @@ public class AddTorre extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField tCanAptos;
     private javax.swing.JTextField tNumero;
-    private javax.swing.JTextField tProyecto;
     // End of variables declaration//GEN-END:variables
 }

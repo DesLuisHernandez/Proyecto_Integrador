@@ -13,8 +13,8 @@ import java.sql.SQLException;
  */
 public class Conexion { // Cambiar a "Conexion" y hacerlo "public"
     private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-    private static final String USERNAME = "inmobiliaria";
-    private static final String PASSWORD = "inmobiliaria";
+    private static final String USERNAME = "MaxSA";
+    private static final String PASSWORD = "MaxSA";
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USERNAME, PASSWORD);
